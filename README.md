@@ -1,4 +1,4 @@
-# CS50W Project 3 [2020]
+# CS50W Project 4 [2020]
 ## Network
 ### Twitter like network
 
