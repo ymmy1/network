@@ -1,8 +1,11 @@
+import json
 from django.contrib.auth import authenticate, login, logout
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 from .models import User, Post
 
@@ -67,4 +70,28 @@ def posts(request):
     # Return posts in reverse chronologial order
     posts = Post.objects.all()
     print(posts)
-    return render(request, "network/index.html")
+    responseData = {
+        'id': 4,
+        'name': 'Test Response',
+        'roles' : ['Admin','User']
+    }
+    return JsonResponse(responseData)
+
+
+
+@csrf_exempt
+@login_required
+def new_post(request):
+    print("LOL it wasnt")
+        # Composing a new email must be via POST
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+
+    data = json.loads(request.body)  
+    print(data)
+    post = Post(
+            username=request.user,
+            body=data.get("body", ""),
+        )
+    post.save()  
+    return JsonResponse({"message": "Post was saved successfully."}, status=201)    
