@@ -1,8 +1,35 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
+<section>
+    <h5>profile</h5>
+    <img width="50px" src="../../static/network/img/avatars/{{ user.avatar }}" alt=""> <br>
+    {{ user.username }} <br>
+    {{ user.email }} <br>
+    Followers : {{ user.followers}} | Following : {{ user.following }} | Likes : {{ user.likes }}<br>
+
+</section>
     <form>
         <textarea id="textarea"></textarea>
         <button id="new_post" type="submit">Post</button>
     </form>
+    <div class="posts">
+        {% for post in posts %}
+            {% for user in users %}
+                {% if post.username_id == user.id  %}
+                    <img width="50px" src="../../static/network/img/avatars/{{ user.avatar }}" alt="">
+                {% endif %}
+            {% endfor %}
+                {{ post.username }}
+            {{ post.timestamp }}
+            <br>
+            {{ post.body }}
+            <br>
+            {{ post.likes }}
+            {{ post.liked }}
+            <button>Like</button>
+            <button>Follow</button>
+            <br>
+        {% endfor %}
+    </div>
 {% endblock %}

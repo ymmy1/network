@@ -11,7 +11,9 @@ from .models import User, Post
 
 
 def index(request):
-    return render(request, "network/index.html")
+    posts = Post.objects.all()
+    users = User.objects.all()
+    return render(request, "network/index.html", {'posts': posts, "users": users})
 
 
 def login_view(request):
@@ -64,19 +66,6 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
-
-def posts(request):
-    
-    # Return posts in reverse chronologial order
-    posts = Post.objects.all()
-    print(posts)
-    responseData = {
-        'id': 4,
-        'name': 'Test Response',
-        'roles' : ['Admin','User']
-    }
-    return JsonResponse(responseData)
-
 
 
 @csrf_exempt

@@ -7,12 +7,15 @@ document.addEventListener('DOMContentLoaded', function() {
   });
   
   function load_posts() {
-    fetch(`/posts`)
+    fetch(`/index`)
     .then(response => response.json())
     .then(posts => {
         // Creating Table of email list
         alert("lol");
-        alert(posts);
+        for (i = 0; i < posts.length; i++)
+        {
+          console.log(posts[i].body)
+        }
     })
   
 }
