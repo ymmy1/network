@@ -4,9 +4,11 @@ from django.db import models
 
 class User(AbstractUser):
     avatar = models.TextField(default="avatar_bucket.png")
-    following = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
-    followers = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
-    likes = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    following_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    followers_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    like_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    followers = models.ManyToManyField("User", related_name="followers_id")
+    following = models.ManyToManyField("User", related_name="following_id")
     pass
 
 

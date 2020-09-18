@@ -6,14 +6,22 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 from .models import User, Post
 
 
 def index(request):
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by("-timestamp").all()
     users = User.objects.all()
-    return render(request, "network/index.html", {'posts': posts, "users": users})
+
+    paginator = Paginator(posts, 5) # Show 5 posts per page.
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    
+    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj})
 
 
 def login_view(request):
@@ -84,3 +92,10 @@ def new_post(request):
         )
     post.save()  
     return JsonResponse({"message": "Post was saved successfully."}, status=201)    
+
+def profile(request,profile_id):
+    profile = User.objects.get(
+            id=profile_id
+            )
+    print(profile)
+    return  render(request, "network/profile.html", {'profile': profile})
