@@ -99,3 +99,23 @@ def profile(request,profile_id):
             )
     print(profile)
     return  render(request, "network/profile.html", {'profile': profile})
+
+@csrf_exempt
+@login_required
+def like_post(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    # Query for requested email
+    try:
+        post = Post.objects.get(id=data["post_id"])
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Email not found."}, status=404)
+
+    user = User.objects.get(username=request.user)
+    print(user.id)
+    post.like_count = post.like_count + 1
+    post.liked_user_count.add(user.id)
+    post.save()
+    return HttpResponse(status=204)

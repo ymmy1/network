@@ -6,7 +6,7 @@ class User(AbstractUser):
     avatar = models.TextField(default="avatar_bucket.png")
     following_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
     followers_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
-    like_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    likers = models.ManyToManyField("User", related_name="liked_id")
     followers = models.ManyToManyField("User", related_name="followers_id")
     following = models.ManyToManyField("User", related_name="following_id")
     pass
@@ -14,8 +14,8 @@ class User(AbstractUser):
 
 class Post(models.Model):
     username = models.ForeignKey("User", on_delete=models.CASCADE, related_name="user")
-    likes = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    like_count = models.PositiveSmallIntegerField(default=0, blank=True, null=True)
+    liked_user_count = models.ManyToManyField("Post", related_name="liked_id")
     body = models.TextField(blank=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    liked = models.BooleanField(default=False)
     
