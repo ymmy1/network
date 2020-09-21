@@ -14,14 +14,22 @@ from .models import User, Post
 def index(request):
     posts = Post.objects.all().order_by("-timestamp").all()
     users = User.objects.all()
-
-    paginator = Paginator(posts, 5) # Show 5 posts per page.
+    # liked posts get
+    liked = Post.objects.filter(
+            liked_user_count=request.user.id
+        ).all().values()
+    liked_posts = []
+    for i in range(len(liked)):
+        liked_posts.append(liked[i]["id"])
+    print(liked_posts)
+    # Show 5 posts per page.
+    paginator = Paginator(posts, 5) 
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
     
-    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj})
+    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts})
 
 
 def login_view(request):

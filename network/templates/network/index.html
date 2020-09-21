@@ -34,13 +34,12 @@
                     {% endif %}
                 {% endfor %}
             {% endfor %}
-            {% for post in post.liked_user_count.all %}
-                {% if user.id == post.id %}       
-                    <button disabled>Like</button>
-                {% endif %}
-            {% endfor %}
+            {% if post.id in liked_posts %}
+                <button disabled>Like</button>
+            {% else %}
                 <button class="like_button" data-page = "{{ post.id }}">Like</button>
-                <button data-page = "{{ post.username_id }}" >Follow</button>
+            {% endif %}
+             <button data-page = "{{ post.username_id }}" >Follow</button>
             <br>
         {% endfor %}
         <nav aria-label="Page navigation example">
