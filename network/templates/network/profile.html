@@ -7,7 +7,7 @@
     <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt=""> <br>
     {{ profile.username }} <br>
     {{ profile.email }} <br>
-    Followers : {{ profile.followers_count }} | Following : {{ profile.following_count }} | Likes : {{ profile.like_count }}<br>
+    Followers : {{ profile.followers.count }} | Following : {{ profile.following.count }} | Likes : {{ profile.like_count }}<br>
 
 </section>
 {% endblock %}

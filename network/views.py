@@ -21,7 +21,15 @@ def index(request):
     liked_posts = []
     for i in range(len(liked)):
         liked_posts.append(liked[i]["id"])
-    print(liked_posts)
+    # Following users get
+    following = User.objects.filter(
+            following=request.user.id
+        ).all().values()
+    print(following)
+    following_users = []
+    for i in range(len(following)):
+        following_users.append(following[i]["id"])
+    print(following_users)
     # Show 5 posts per page.
     paginator = Paginator(posts, 5) 
 
@@ -29,7 +37,7 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     
-    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts})
+    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
 
 
 def login_view(request):
@@ -118,12 +126,56 @@ def like_post(request):
     # Query for requested email
     try:
         post = Post.objects.get(id=data["post_id"])
+        profile = User.objects.get(id=post.username_id)
     except Post.DoesNotExist:
         return JsonResponse({"error": "Email not found."}, status=404)
 
     user = User.objects.get(username=request.user)
-    print(user.id)
     post.like_count = post.like_count + 1
     post.liked_user_count.add(user.id)
+    profile.like_count = profile.like_count + 1
+    profile.save()
     post.save()
+    return HttpResponse(status=204)
+
+@csrf_exempt
+@login_required
+def unlike_post(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    # Query for requested email
+    try:
+        post = Post.objects.get(id=data["post_id"])
+        profile = User.objects.get(id=post.username_id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Email not found."}, status=404)
+
+    user = User.objects.get(username=request.user)
+    post.like_count = post.like_count - 1
+    post.liked_user_count.remove(user.id)
+    profile.like_count = profile.like_count - 1
+    profile.save()
+    post.save()
+    return HttpResponse(status=204)
+
+@csrf_exempt
+@login_required
+def follow_user(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    # Query for requested email
+    try:
+        post_user = User.objects.get(id=data["user_id"])
+        user = User.objects.get(username=request.user)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Email not found."}, status=404)
+
+    post_user.followers.add(user.id)
+    user.following.add(post_user.id)
+    post_user.save()
+    user.save()
     return HttpResponse(status=204)
