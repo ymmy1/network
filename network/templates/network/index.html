@@ -15,41 +15,43 @@
     </form>
     <div class="posts">
         {% for post in page_obj %}
-            {% for profile in users %}
-                {% if post.username_id == profile.id  %}
-                    <br>
-                    <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
-                {% endif %}
-            {% endfor %}
-               <a href="/profile/{{ post.username_id }}"> {{ post.username }} </a>
-            {{ post.timestamp }}
-            <br>
-            <br>
-            <p>{{ post.body }}</p>
-            <span id="like_for_{{ post.id }}">{{ post.liked_user_count.all.count }}</span>
-            <div id="like_avatars_{{ post.id }}">
-                {% for liked in post.liked_user_count.all %}
-                    {% for profile in users %}
-                        {% if liked.id == profile.id  %}
-                            <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
-                        {% endif %}
-                    {% endfor %}
-                {% endfor %}
-            </div>
-            {% if post.id in liked_posts %}
-                <button class="unlike_button" data-page = "{{ post.id }}">UnLike</button>
-            {% else %}
-                <button class="like_button" data-page = "{{ post.id }}">Like</button>
-            {% endif %}
-            {% if post.username_id == user.id %}
-                {% else %}
-                    {% if post.username_id in following_users %}
-                        <button class="unfollow_button" data-page = "{{ post.username_id }}">Following</button>
-                    {% else %}
-                        <button class="follow_button" data-page = "{{ post.username_id }}">Follow</button>
+            <div class="post">
+                {% for profile in users %}
+                    {% if post.username_id == profile.id  %}
+                        <br>
+                        <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
                     {% endif %}
+                {% endfor %}
+                <a class="profile_link" href="/profile/{{ post.username_id }}"> {{ post.username }} </a>
+                {{ post.timestamp }}
+                <br>
+                <br>
+                <p>{{ post.body }}</p>
+                <span id="like_for_{{ post.id }}">{{ post.liked_user_count.all.count }}</span>
+                <div id="like_avatars_{{ post.id }}">
+                    {% for liked in post.liked_user_count.all %}
+                        {% for profile in users %}
+                            {% if liked.id == profile.id  %}
+                                <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+                {% if post.id in liked_posts %}
+                    <button class="unlike_button" data-page = "{{ post.id }}">UnLike</button>
+                {% else %}
+                    <button class="like_button" data-page = "{{ post.id }}">Like</button>
                 {% endif %}
-            <br>
+                {% if post.username_id == user.id %}
+                    {% else %}
+                        {% if post.username_id in following_users %}
+                            <button class="unfollow_button" data-page = "{{ post.username_id }}">Following</button>
+                        {% else %}
+                            <button class="follow_button" data-page = "{{ post.username_id }}">Follow</button>
+                        {% endif %}
+                    {% endif %}
+                <br>
+            </div>
         {% endfor %}
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">

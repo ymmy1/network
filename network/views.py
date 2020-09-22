@@ -23,7 +23,7 @@ def index(request):
         liked_posts.append(liked[i]["id"])
     # Following users get
     following = User.objects.filter(
-            following=request.user.id
+            followers=request.user.id
         ).all().values()
     print(following)
     following_users = []
@@ -176,6 +176,26 @@ def follow_user(request):
 
     post_user.followers.add(user.id)
     user.following.add(post_user.id)
+    post_user.save()
+    user.save()
+    return HttpResponse(status=204)
+
+@csrf_exempt
+@login_required
+def unfollow_user(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    # Query for requested email
+    try:
+        post_user = User.objects.get(id=data["user_id"])
+        user = User.objects.get(username=request.user)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Email not found."}, status=404)
+
+    post_user.followers.remove(user.id)
+    user.following.remove(post_user.id)
     post_user.save()
     user.save()
     return HttpResponse(status=204)

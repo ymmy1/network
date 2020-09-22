@@ -5,7 +5,14 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelector('#new_post').addEventListener('click', () => new_post());
     document.querySelectorAll('.like_button').forEach(link => {link.onclick = () => { like_post(link) }});
     document.querySelectorAll('.unlike_button').forEach(link => {link.onclick = () => { unlike_post(link) }});
-    document.querySelectorAll('.follow_button').forEach(link => {link.onclick = () => { follow_user(link) }});
+    document.querySelectorAll('.follow_button').forEach(link => {
+      link.onclick = () => { follow_user(link) };
+    });
+    document.querySelectorAll('.unfollow_button').forEach(link => {
+      link.onclick = () => { unfollow_user(link) };
+      link.onmouseover = () => { link.innerHTML = "Unfollow"};
+      link.onmouseout = () => { link.innerHTML = "Following"};
+    });
   
   });
   
@@ -101,6 +108,51 @@ function follow_user(link)
   })
 
   // Front End part
-  link.setAttribute("class", "unfollow_button")
-  link.innerHTML = "Following"
+  nickname = link.parentElement.querySelector('.profile_link');
+  links = document.querySelectorAll(".profile_link");
+
+  for(i=0; i < links.length; i++)
+  {
+    if(links[i].innerHTML == nickname.innerHTML)
+    {
+      button = links[i].parentElement.querySelector('.follow_button');
+      button.innerHTML = "Following";
+      button.setAttribute("class", "unfollow_button")
+    }
+  }
+  document.querySelectorAll('.unfollow_button').forEach(link => {
+    link.onclick = () => { unfollow_user(link) };
+    link.onmouseover = () => { link.innerHTML = "Unfollow"};
+    link.onmouseout = () => { link.innerHTML = "Following"};
+  });
+}
+
+function unfollow_user(link)
+{
+  // Back End Part
+  fetch('/unfollow_user', {
+    method: 'POST',
+    body: JSON.stringify({
+      user_id : link.dataset.page,
+    })
+  })
+
+  // Front End part
+  nickname = link.parentElement.querySelector('.profile_link');
+  links = document.querySelectorAll(".profile_link");
+
+  for(i=0; i < links.length; i++)
+  {
+    if(links[i].innerHTML == nickname.innerHTML)
+    {
+      button = links[i].parentElement.querySelector('.unfollow_button');
+      button.innerHTML = "Follow";
+      button.setAttribute("class", "follow_button")
+    }
+  }
+  document.querySelectorAll('.follow_button').forEach(link => {
+    link.onclick = () => { follow_user(link) };
+    link.onmouseover = () => { link.innerHTML = "Follow"};
+    link.onmouseout = () => { link.innerHTML = "Follow"};
+  });
 }
