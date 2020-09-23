@@ -1,8 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
     // Use buttons to toggle between views
-    document.querySelector('#all_posts').addEventListener('click', () => load_posts());
-    document.querySelector('#new_post').addEventListener('click', () => new_post());
     document.querySelectorAll('.like_button').forEach(link => {link.onclick = () => { like_post(link) }});
     document.querySelectorAll('.unlike_button').forEach(link => {link.onclick = () => { unlike_post(link) }});
     document.querySelectorAll('.follow_button').forEach(link => {
@@ -13,22 +11,13 @@ document.addEventListener('DOMContentLoaded', function() {
       link.onmouseover = () => { link.innerHTML = "Unfollow"};
       link.onmouseout = () => { link.innerHTML = "Following"};
     });
+    if (document.querySelector('#new_post'))
+    {
+      document.querySelector('#new_post').addEventListener('click', () => new_post());
+    }
   
   });
   
-  function load_posts() {
-    fetch(`/index`)
-    .then(response => response.json())
-    .then(posts => {
-        // Creating Table of email list
-        alert("lol");
-        for (i = 0; i < posts.length; i++)
-        {
-          console.log(posts[i].body)
-        }
-    })
-  
-}
 
 function new_post()
 {

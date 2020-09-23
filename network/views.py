@@ -25,11 +25,9 @@ def index(request):
     following = User.objects.filter(
             followers=request.user.id
         ).all().values()
-    print(following)
     following_users = []
     for i in range(len(following)):
         following_users.append(following[i]["id"])
-    print(following_users)
     # Show 5 posts per page.
     paginator = Paginator(posts, 5) 
 
@@ -39,6 +37,40 @@ def index(request):
     
     return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
 
+@csrf_exempt
+@login_required
+def following_posts(request):
+    users = User.objects.all()
+    # liked posts get
+    liked = Post.objects.filter(
+            liked_user_count=request.user.id
+        ).all().values()
+    liked_posts = []
+    for i in range(len(liked)):
+        liked_posts.append(liked[i]["id"])
+    # Following users get
+    following = User.objects.filter(
+            followers=request.user.id
+        ).all().values()
+    following_users = []
+    for i in range(len(following)):
+        following_users.append(following[i]["id"])
+
+    if following_users:
+
+        posts = Post.objects.all().filter(
+                username_id__in=following_users
+            ).order_by("-timestamp").all()
+    else:
+        posts = []
+    # Show 5 posts per page.
+    paginator = Paginator(posts, 5) 
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    
+    return render(request, "network/following_posts.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
 
 def login_view(request):
     if request.method == "POST":
@@ -69,6 +101,7 @@ def register(request):
     if request.method == "POST":
         username = request.POST["username"]
         email = request.POST["email"]
+        avatar_id = request.POST["avatar"]
 
         # Ensure password matches confirmation
         password = request.POST["password"]
@@ -81,6 +114,7 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.avatar = avatar_id
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
@@ -95,13 +129,11 @@ def register(request):
 @csrf_exempt
 @login_required
 def new_post(request):
-    print("LOL it wasnt")
         # Composing a new email must be via POST
     if request.method != "POST":
         return JsonResponse({"error": "POST request required."}, status=400)
 
     data = json.loads(request.body)  
-    print(data)
     post = Post(
             username=request.user,
             body=data.get("body", ""),
@@ -113,7 +145,6 @@ def profile(request,profile_id):
     profile = User.objects.get(
             id=profile_id
             )
-    print(profile)
     return  render(request, "network/profile.html", {'profile': profile})
 
 @csrf_exempt
@@ -199,3 +230,19 @@ def unfollow_user(request):
     post_user.save()
     user.save()
     return HttpResponse(status=204)
+
+@csrf_exempt
+@login_required
+def edit_profile(request):
+
+    if request.method != "POST":
+        return render(request, "network/edit_profile.html")
+    try:
+        user = User.objects.get(username=request.user)
+        avatar_id = request.POST["avatar"]
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Email not found."}, status=404)
+    
+    user.avatar = avatar_id
+    user.save()
+    return HttpResponseRedirect(reverse("index"))
