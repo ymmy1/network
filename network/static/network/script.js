@@ -3,14 +3,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // Use buttons to toggle between views
     document.querySelectorAll('.like_button').forEach(link => {link.onclick = () => { like_post(link) }});
     document.querySelectorAll('.unlike_button').forEach(link => {link.onclick = () => { unlike_post(link) }});
-    document.querySelectorAll('.follow_button').forEach(link => {
-      link.onclick = () => { follow_user(link) };
-    });
-    document.querySelectorAll('.unfollow_button').forEach(link => {
-      link.onclick = () => { unfollow_user(link) };
-      link.onmouseover = () => { link.innerHTML = "Unfollow"};
-      link.onmouseout = () => { link.innerHTML = "Following"};
-    });
+    document.querySelectorAll('.follow_button').forEach(link => {link.onclick = () => { follow_user(link) }});
+    document.querySelectorAll('.unfollow_button').forEach(link => {link.onclick = () => { unfollow_user(link) }});
+    document.querySelectorAll('.edit_post_button').forEach(link => {link.onclick = () => { edit_post(link) }});
+    document.querySelectorAll('.delete_post_button').forEach(link => {link.onclick = () => { delete_post(link) }});
     if (document.querySelector('#new_post'))
     {
       document.querySelector('#new_post').addEventListener('click', () => new_post());
@@ -105,14 +101,12 @@ function follow_user(link)
     if(links[i].innerHTML == nickname.innerHTML)
     {
       button = links[i].parentElement.querySelector('.follow_button');
-      button.innerHTML = "Following";
+      button.innerHTML = "UnFollow";
       button.setAttribute("class", "unfollow_button")
     }
   }
   document.querySelectorAll('.unfollow_button').forEach(link => {
     link.onclick = () => { unfollow_user(link) };
-    link.onmouseover = () => { link.innerHTML = "Unfollow"};
-    link.onmouseout = () => { link.innerHTML = "Following"};
   });
 }
 
@@ -141,7 +135,57 @@ function unfollow_user(link)
   }
   document.querySelectorAll('.follow_button').forEach(link => {
     link.onclick = () => { follow_user(link) };
-    link.onmouseover = () => { link.innerHTML = "Follow"};
-    link.onmouseout = () => { link.innerHTML = "Follow"};
   });
+}
+
+function edit_post(link)
+{
+  var textarea = link.parentElement.querySelector('textarea');
+  var form = link.parentElement.querySelector('form');
+  link.parentElement.querySelector('.post_body').style.display = "none";
+  textarea.value = link.parentElement.querySelector('.post_body').innerHTML;
+  link.parentElement.querySelector('form').style.display = "block";
+  
+  $(document).mouseup(function(e) 
+  {
+    var container = $(form);
+    
+    // if the target of the click isn't the container nor a descendant of the container
+    if (!container.is(e.target) && container.has(e.target).length === 0) 
+    {
+      link.parentElement.querySelector('.post_body').style.display = "block";
+      link.parentElement.querySelector('form').style.display = "none";
+      
+    }
+  });
+  
+  form.onsubmit = (e) => { 
+    e.preventDefault();
+    fetch('/edit_post', {
+      method: 'POST',
+      body: JSON.stringify({
+          body : textarea.value,
+          post_id : link.dataset.page
+      })
+    })
+    link.parentElement.querySelector('.post_body').style.display = "block";
+    link.parentElement.querySelector('.post_body').innerHTML = textarea.value;
+    link.parentElement.querySelector('form').style.display = "none";
+  
+  }
+}
+
+function delete_post(link)
+{
+  // Front End
+  link.parentElement.style.opacity = "0";
+  link.parentElement.style.display = "none";  
+  // Back End
+  fetch('/delete_post', {
+    method: 'POST',
+    body: JSON.stringify({
+      post_id : link.dataset.page
+    })
+  }
+  )
 }

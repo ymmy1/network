@@ -246,3 +246,42 @@ def edit_profile(request):
     user.avatar = avatar_id
     user.save()
     return HttpResponseRedirect(reverse("index"))
+
+@csrf_exempt
+@login_required
+def edit_post(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    # Query for requested email
+    try:
+        post = Post.objects.get(id=data["post_id"])
+        print(data["post_id"])
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    print(post.body)
+    post.body = data["body"]
+    print(post.body)
+    post.save()
+    return HttpResponse(status=204)
+
+@csrf_exempt
+@login_required
+def delete_post(request):
+    if request.method != "POST":
+        return JsonResponse({"error": "POST request required."}, status=400)
+    
+    data = json.loads(request.body)
+    # Query for requested email
+    try:
+        post = Post.objects.get(id=data["post_id"])
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    if post.username_id == request.user.id:
+        post.delete()
+        return HttpResponse(status=204)
+    else:
+        return JsonResponse({"error": "ID's not matching"}, status=400)
