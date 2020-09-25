@@ -7,6 +7,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.unfollow_button').forEach(link => {link.onclick = () => { unfollow_user(link) }});
     document.querySelectorAll('.edit_post_button').forEach(link => {link.onclick = () => { edit_post(link) }});
     document.querySelectorAll('.delete_post_button').forEach(link => {link.onclick = () => { delete_post(link) }});
+    document.querySelectorAll('label').forEach(link => {link.onclick = () => { select_avatar(link) }});
     if (document.querySelector('#new_post'))
     {
       document.querySelector('#new_post').addEventListener('click', () => new_post());
@@ -188,4 +189,21 @@ function delete_post(link)
     })
   }
   )
+}
+function select_avatar(link)
+{
+  active = link.parentElement.querySelector(".active");
+  id = link.getAttribute("for");
+  checked = document.getElementById(id);
+  if (!active)
+  {
+    link.querySelector('img').classList.add("active")
+    checked.setAttribute("checked", "checked")
+  }
+  else
+  {
+    active.classList.remove("active")
+    link.querySelector('img').classList.add("active")
+    checked.checked = true
+  }
 }

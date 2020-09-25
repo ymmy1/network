@@ -1,13 +1,91 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-<section>
-    <h5>profile</h5>
+<section id="profile.html">
+    <div class="profile_card">
+        <h5>profile</h5>
     {{ profile.username }}
     <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt=""> <br>
     {{ profile.username }} <br>
     {{ profile.email }} <br>
     Followers : {{ profile.followers.count }} | Following : {{ profile.following.count }} | Likes : {{ profile.like_count }}<br>
-
+    </div>
+    <div class="posts">
+        {% for post in page_obj %}
+            <div class="post">
+                {% for profile in users %}
+                    {% if post.username_id == profile.id  %}
+                        <br>
+                        <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                    {% endif %}
+                {% endfor %}
+                <a class="profile_link" href="/profile/{{ post.username_id }}"> {{ post.username }} </a>
+                {{ post.timestamp }}
+                {% if post.username_id == user.id %}
+                <button class="edit_post_button" data-page = "{{ post.id }}">Edit</button>
+                <button class="delete_post_button" data-page = "{{ post.id }}">Delete</button>
+                {% endif %}
+                <br>
+                <br>
+                <p class="post_body" style="display: block;">{{ post.body }}</p>
+                <form style="display: none;">
+                <input type="text" style="display: none;" name="post_id" value="{{ post.id }}" disabled>
+                <textarea name="body"></textarea>
+                <button>Save</button>
+                </form>
+                <span id="like_for_{{ post.id }}">{{ post.liked_user_count.all.count }}</span>
+                <div id="like_avatars_{{ post.id }}">
+                    {% for liked in post.liked_user_count.all %}
+                    {% for profile in users %}
+                    {% if liked.id == profile.id  %}
+                        <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                {% if user.is_authenticated %}
+                {% if post.id in liked_posts %}
+                    <button class="unlike_button" data-page = "{{ post.id }}">UnLike</button>
+                {% else %}
+                    <button class="like_button" data-page = "{{ post.id }}">Like</button>
+                {% endif %}
+                {% if post.username_id == user.id %}
+                    {% else %}
+                        {% if post.username_id in following_users %}
+                            <button class="unfollow_button" data-page = "{{ post.username_id }}">UnFollow</button>
+                        {% else %}
+                            <button class="follow_button" data-page = "{{ post.username_id }}">Follow</button>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+                <br>
+            </div>
+        {% endfor %}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+                {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
+                {% endif %}
+                {% for page in page_obj.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">&laquo; Next</a>
+                    </li>
+                {% else %}
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo; Next</a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
 </section>
 {% endblock %}

@@ -145,7 +145,32 @@ def profile(request,profile_id):
     profile = User.objects.get(
             id=profile_id
             )
-    return  render(request, "network/profile.html", {'profile': profile})
+    users = User.objects.all()
+    # liked posts get
+    liked = Post.objects.filter(
+            liked_user_count=request.user.id
+        ).all().values()
+    liked_posts = []
+    for i in range(len(liked)):
+        liked_posts.append(liked[i]["id"])
+    # Following users get
+    following = User.objects.filter(
+            followers=request.user.id
+        ).all().values()
+    following_users = []
+    for i in range(len(following)):
+        following_users.append(following[i]["id"])
+
+    posts = Post.objects.all().filter(
+            username_id=profile_id
+        ).order_by("-timestamp").all()
+    # Show 5 posts per page.
+    paginator = Paginator(posts, 5) 
+
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return  render(request, "network/profile.html", {'profile': profile,'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
 
 @csrf_exempt
 @login_required
