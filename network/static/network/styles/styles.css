@@ -9,7 +9,7 @@ body {
   text-align: center;
 }
 
-body nav {
+body .navbar {
   background: #274466;
   color: #fafafa;
 }
@@ -18,7 +18,11 @@ body a {
   color: #c1c1c1;
 }
 
-body #register {
+body a:hover {
+  color: #fafafa;
+}
+
+body #register, body #login {
   -webkit-box-shadow: 0px 10px 52px 5px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 10px 52px 5px rgba(0, 0, 0, 0.75);
   border-radius: 5px;
@@ -29,7 +33,7 @@ body #register {
   border-radius: 30px;
 }
 
-body #register h2 {
+body #register h2, body #login h2 {
   background: #274466;
   padding: 10px 0;
   margin: 0;
@@ -37,38 +41,38 @@ body #register h2 {
   border-top-right-radius: 30px;
 }
 
-body #register form {
+body #register form, body #login form {
   padding: 10px 10px 0;
 }
 
-body #register form input {
+body #register form input, body #login form input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-body #register form input:focus {
+body #register form input:focus, body #login form input:focus {
   background: rgba(255, 255, 255, 0.95);
 }
 
-body #register form input[type=submit] {
+body #register form input[type=submit], body #login form input[type=submit] {
   color: black;
   font-weight: bold;
 }
 
-body #register form .avatar-list input[type=radio] {
+body #register form .avatar-list input[type=radio], body #login form .avatar-list input[type=radio] {
   display: none;
 }
 
-body #register form .avatar-list label {
+body #register form .avatar-list label, body #login form .avatar-list label {
   border-radius: 50%;
   cursor: pointer;
 }
 
-body #register form .avatar-list label img {
+body #register form .avatar-list label img, body #login form .avatar-list label img {
   border-radius: 50%;
   width: 100px;
 }
 
-body #register form .avatar-list .active {
+body #register form .avatar-list .active, body #login form .avatar-list .active {
   border: 5px solid white;
   -webkit-transform: scale(2);
           transform: scale(2);
