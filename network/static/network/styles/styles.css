@@ -22,7 +22,99 @@ body a:hover {
   color: #fafafa;
 }
 
-body #register, body #login {
+body #index, body #profile, body #following {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 70px;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body #index .paginator, body #profile .paginator, body #following .paginator {
+  margin: 0;
+  margin-top: 50px;
+  padding: 0;
+  list-style: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body #index .paginator li a, body #profile .paginator li a, body #following .paginator li a {
+  background: #406794;
+  border: 1px solid #274466;
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+body #index .paginator li a:hover, body #profile .paginator li a:hover, body #following .paginator li a:hover {
+  background: rgba(64, 103, 148, 0.1);
+}
+
+body #index .paginator .disabled, body #profile .paginator .disabled, body #following .paginator .disabled {
+  cursor: pointer;
+}
+
+body #index .paginator .disabled a, body #profile .paginator .disabled a, body #following .paginator .disabled a {
+  color: #cacaca;
+}
+
+body #index .paginator .disabled a:hover, body #profile .paginator .disabled a:hover, body #following .paginator .disabled a:hover {
+  background: rgba(64, 103, 148, 0.1);
+}
+
+body #index a, body #profile a, body #following a {
+  text-decoration: none;
+}
+
+body #index a:hover img, body #profile a:hover img, body #following a:hover img {
+  -webkit-transform: scale(1.5);
+          transform: scale(1.5);
+  -webkit-transition: -webkit-transform 0.1s;
+  transition: -webkit-transform 0.1s;
+  transition: transform 0.1s;
+  transition: transform 0.1s, -webkit-transform 0.1s;
+}
+
+body #index .leader h2, body #profile .leader h2, body #following .leader h2 {
+  background: #c4aa5b !important;
+}
+
+body #index .profile-card, body #index #login, body #profile .profile-card, body #profile #login, body #following .profile-card, body #following #login {
+  margin: 0 !important;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-bottom: 20px;
+}
+
+body #index .profile-card img, body #index #login img, body #profile .profile-card img, body #profile #login img, body #following .profile-card img, body #following #login img {
+  margin-top: 20px;
+  width: 250px;
+}
+
+body #index .profile-card a, body #index .profile-card p, body #index #login a, body #index #login p, body #profile .profile-card a, body #profile .profile-card p, body #profile #login a, body #profile #login p, body #following .profile-card a, body #following .profile-card p, body #following #login a, body #following #login p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.5em;
+}
+
+body #index .profile-card .newuser, body #index #login .newuser, body #profile .profile-card .newuser, body #profile #login .newuser, body #following .profile-card .newuser, body #following #login .newuser {
+  list-style: none;
+  padding: 50px 0;
+}
+
+body #index .profile-card .newuser li, body #index #login .newuser li, body #profile .profile-card .newuser li, body #profile #login .newuser li, body #following .profile-card .newuser li, body #following #login .newuser li {
+  margin-top: 20px;
+}
+
+body #register, body #login, body #index .profile-card, body #profile .profile-card, body #following .profile-card, body #index #login {
   -webkit-box-shadow: 0px 10px 52px 5px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 10px 52px 5px rgba(0, 0, 0, 0.75);
   border-radius: 5px;
@@ -33,7 +125,7 @@ body #register, body #login {
   border-radius: 30px;
 }
 
-body #register h2, body #login h2 {
+body #register h2, body #login h2, body #index .profile-card h2, body #profile .profile-card h2, body #following .profile-card h2, body #index #login h2 {
   background: #274466;
   padding: 10px 0;
   margin: 0;
@@ -41,38 +133,38 @@ body #register h2, body #login h2 {
   border-top-right-radius: 30px;
 }
 
-body #register form, body #login form {
+body #register form, body #login form, body #index .profile-card form, body #profile .profile-card form, body #following .profile-card form, body #index #login form {
   padding: 10px 10px 0;
 }
 
-body #register form input, body #login form input {
+body #register form input, body #login form input, body #index .profile-card form input, body #profile .profile-card form input, body #following .profile-card form input, body #index #login form input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-body #register form input:focus, body #login form input:focus {
+body #register form input:focus, body #login form input:focus, body #index .profile-card form input:focus, body #profile .profile-card form input:focus, body #following .profile-card form input:focus, body #index #login form input:focus {
   background: rgba(255, 255, 255, 0.95);
 }
 
-body #register form input[type=submit], body #login form input[type=submit] {
+body #register form input[type=submit], body #login form input[type=submit], body #index .profile-card form input[type=submit], body #profile .profile-card form input[type=submit], body #following .profile-card form input[type=submit], body #index #login form input[type=submit] {
   color: black;
   font-weight: bold;
 }
 
-body #register form .avatar-list input[type=radio], body #login form .avatar-list input[type=radio] {
+body #register form .avatar-list input[type=radio], body #login form .avatar-list input[type=radio], body #index .profile-card form .avatar-list input[type=radio], body #profile .profile-card form .avatar-list input[type=radio], body #following .profile-card form .avatar-list input[type=radio], body #index #login form .avatar-list input[type=radio] {
   display: none;
 }
 
-body #register form .avatar-list label, body #login form .avatar-list label {
+body #register form .avatar-list label, body #login form .avatar-list label, body #index .profile-card form .avatar-list label, body #profile .profile-card form .avatar-list label, body #following .profile-card form .avatar-list label, body #index #login form .avatar-list label {
   border-radius: 50%;
   cursor: pointer;
 }
 
-body #register form .avatar-list label img, body #login form .avatar-list label img {
+body #register form .avatar-list label img, body #login form .avatar-list label img, body #index .profile-card form .avatar-list label img, body #profile .profile-card form .avatar-list label img, body #following .profile-card form .avatar-list label img, body #index #login form .avatar-list label img {
   border-radius: 50%;
   width: 100px;
 }
 
-body #register form .avatar-list .active, body #login form .avatar-list .active {
+body #register form .avatar-list .active, body #login form .avatar-list .active, body #index .profile-card form .avatar-list .active, body #profile .profile-card form .avatar-list .active, body #following .profile-card form .avatar-list .active, body #index #login form .avatar-list .active {
   border: 5px solid white;
   -webkit-transform: scale(2);
           transform: scale(2);

@@ -1,82 +1,95 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-<section>
-    <h5>profile</h5>
-    <img id="profile_avatar" width="50px" src="../../static/network/img/avatars/{{ user.avatar }}" alt=""> <br>
-    <a href="/profile/{{ user.id }}"> {{ user.username }} </a> <br>
-    {{ user.email }} <br>
-    Followers : {{ user.followers.count }} | Following : {{ user.following.count }} | Likes : {{ user.like_count }}<br>
-
-</section>
+<section id="following">
+    <div class="profile-card">
+        <h2>Profile</h2>
+        <img id="profile_avatar" src="../../static/network/img/avatars/{{ user.avatar }}" alt=""> <br>
+        <a href="/profile/{{ user.id }}"> {{ user.username }} </a> <br>
+        <p class="email">{{ user.email }}</p> <br>
+        <p class="count">Followers : {{ user.followers.count }} | Following : {{ user.following.count }} | Likes : {{ user.like_count }}</p><br>
+    </div>
     <div class="posts">
         {% if page_obj|length > 0%}
             {% for post in page_obj %}
-                <div class="post">
-                    {% for profile in users %}
-                        {% if post.username_id == profile.id  %}
-                            <br>
-                            <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
-                        {% endif %}
-                    {% endfor %}
-                    <a class="profile_link" href="/profile/{{ post.username_id }}"> {{ post.username }} </a>
-                    {{ post.timestamp }}
-                    <br>
-                    <br>
-                    <p>{{ post.body }}</p>
-                    <span id="like_for_{{ post.id }}">{{ post.liked_user_count.all.count }}</span>
-                    <div id="like_avatars_{{ post.id }}">
-                        {% for liked in post.liked_user_count.all %}
-                            {% for profile in users %}
-                                {% if liked.id == profile.id  %}
-                                    <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
-                                {% endif %}
-                            {% endfor %}
-                        {% endfor %}
-                    </div>
-                    {% if post.id in liked_posts %}
-                        <button class="unlike_button" data-page = "{{ post.id }}">UnLike</button>
-                    {% else %}
-                        <button class="like_button" data-page = "{{ post.id }}">Like</button>
-                    {% endif %}
-                    {% if post.username_id == user.id %}
-                        {% else %}
-                            {% if post.username_id in following_users %}
-                                <button class="unfollow_button" data-page = "{{ post.username_id }}">Following</button>
-                            {% else %}
-                                <button class="follow_button" data-page = "{{ post.username_id }}">Follow</button>
-                            {% endif %}
-                        {% endif %}
-                    <br>
-                </div>
-            {% endfor %}
-        {% else %}
-            <span>You are not following anyone</span>
-        {% endif %}
-        <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-                {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
-                {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                </li>
+            <div class="post">
+                {% for profile in users %}
+                {% if post.username_id == profile.id  %}
+                <br>
+                <a href="/profile/{{ profile.id }}">
+                    <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                </a>
                 {% endif %}
-                {% for page in page_obj.paginator.page_range %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
                 {% endfor %}
-                {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">&laquo; Next</a>
-                    </li>
+                <a class="profile_link" href="/profile/{{ post.username_id }}"> {{ post.username }} </a>
+                {{ post.timestamp }}
+                <br>
+                <br>
+                <p>{{ post.body }}</p>
+                <span id="like_for_{{ post.id }}">{{ post.liked_user_count.all.count }}</span>
+                <div id="like_avatars_{{ post.id }}">
+                    {% for liked in post.liked_user_count.all %}
+                    {% for profile in users %}
+                    {% if liked.id == profile.id  %}
+                    <a href="/profile/{{ profile.id }}">
+                        <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                {% if post.id in liked_posts %}
+                <button class="unlike_button" data-page = "{{ post.id }}">UnLike</button>
                 {% else %}
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo; Next</a>
-                </li>
+                <button class="like_button" data-page = "{{ post.id }}">Like</button>
                 {% endif %}
-            </ul>
-        </nav>
-    </div>
-{% endblock %}
+                {% if post.username_id == user.id %}
+                {% else %}
+                {% if post.username_id in following_users %}
+                <button class="unfollow_button" data-page = "{{ post.username_id }}">Following</button>
+                {% else %}
+                <button class="follow_button" data-page = "{{ post.username_id }}">Follow</button>
+                {% endif %}
+                {% endif %}
+                <br>
+            </div>
+            {% endfor %}
+            {% else %}
+            <span>You are not following anyone</span>
+            {% endif %}
+            <nav aria-label="Page navigation example">
+                <ul class="paginator">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link " href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    {% endif %}
+                    {% for page in page_obj.paginator.page_range %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+        <div class="profile-card leader">
+
+            <h2>THE MOST LIKES 🏆</h2>
+            <img id="profile_avatar" src="../../static/network/img/avatars/{{ topuser.avatar }}" alt=""> <br>
+            <a href="/profile/{{ topuser.id }}"> {{ topuser.username }} </a> <br>
+            <p class="email">{{ topuser.email }}</p> <br>
+            <p class="count">Followers : {{ topuser.followers.count }} | Following : {{ topuser.following.count }} | Likes : {{ topuser.like_count }}</p><br>
+        </div>
+    </section>
+        {% endblock %}

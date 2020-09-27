@@ -14,6 +14,7 @@ from .models import User, Post
 def index(request):
     posts = Post.objects.all().order_by("-timestamp").all()
     users = User.objects.all()
+    topuser = User.objects.all().order_by("-like_count").first()
     # liked posts get
     liked = Post.objects.filter(
             liked_user_count=request.user.id
@@ -35,12 +36,13 @@ def index(request):
     page_obj = paginator.get_page(page_number)
 
     
-    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
+    return render(request, "network/index.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users, "topuser": topuser})
 
 @csrf_exempt
 @login_required
 def following_posts(request):
     users = User.objects.all()
+    topuser = User.objects.all().order_by("-like_count").first()
     # liked posts get
     liked = Post.objects.filter(
             liked_user_count=request.user.id
@@ -70,7 +72,7 @@ def following_posts(request):
     page_obj = paginator.get_page(page_number)
 
     
-    return render(request, "network/following_posts.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
+    return render(request, "network/following_posts.html", {'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users, 'topuser': topuser})
 
 def login_view(request):
     if request.method == "POST":
@@ -146,6 +148,7 @@ def profile(request,profile_id):
             id=profile_id
             )
     users = User.objects.all()
+    topuser = User.objects.all().order_by("-like_count").first()
     # liked posts get
     liked = Post.objects.filter(
             liked_user_count=request.user.id
@@ -170,7 +173,7 @@ def profile(request,profile_id):
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
 
-    return  render(request, "network/profile.html", {'profile': profile,'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users})
+    return  render(request, "network/profile.html", {'profile': profile,'posts': posts, "users": users,'page_obj': page_obj, 'liked_posts': liked_posts, 'following_users' : following_users, 'topuser': topuser})
 
 @csrf_exempt
 @login_required

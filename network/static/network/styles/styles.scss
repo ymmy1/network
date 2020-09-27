@@ -23,7 +23,96 @@ body
             color: #fafafa;
         }
     }
-    #register, #login
+    #index, #profile, #following
+    {
+        display: flex;
+        padding: 70px;
+        justify-content: space-between;
+        .paginator
+        {
+            margin: 0;
+            margin-top: 50px;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            li
+            {
+                a
+                {
+                    background: $bg-dark;
+                    border: 1px solid $bg-darker;
+                    color: #fff;
+                    font-weight: bold;
+                    font-size: 1.2em;
+                    &:hover
+                    {
+                        background: rgba($bg-dark, 0.1);
+
+                    }
+                }
+            }
+            .disabled
+            {
+                cursor: pointer;
+                a
+                {
+                    color: #cacaca;
+                    &:hover
+                    {
+                        background: rgba($bg-dark, 0.1);
+                    }
+                }
+            }
+        }
+        a
+        {
+            text-decoration: none;
+            &:hover
+            {
+
+                img
+                {
+                    transform: scale(1.5);
+                    transition: transform 0.1s;
+                }
+            }
+        }
+        .leader
+        {
+            h2
+            {
+                background: #c4aa5b !important;
+            }
+        }
+        .profile-card, #login
+        {
+            margin: 0 !important;
+            height: fit-content;
+            padding-bottom: 20px;
+            img
+            {
+                margin-top: 20px;
+                width: 250px;
+            }
+            a, p
+            {
+                margin: 0;
+                padding: 0;
+                font-size: 1.5em;
+            }
+            .newuser
+            {
+                list-style: none;
+                padding: 50px 0;
+                li
+                {
+                    margin-top: 20px;
+                }
+            }
+        }
+    }
+    #register, #login, #index .profile-card, #profile .profile-card, #following .profile-card, #index #login
     {
         -webkit-box-shadow: 0px 10px 52px 5px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 10px 52px 5px rgba(0,0,0,0.75);

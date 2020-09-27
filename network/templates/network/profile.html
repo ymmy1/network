@@ -1,14 +1,13 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-<section id="profile.html">
-    <div class="profile_card">
-        <h5>profile</h5>
-    {{ profile.username }}
-    <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt=""> <br>
-    {{ profile.username }} <br>
-    {{ profile.email }} <br>
-    Followers : {{ profile.followers.count }} | Following : {{ profile.following.count }} | Likes : {{ profile.like_count }}<br>
+<section id="profile">
+    <div class="profile-card">
+        <h2>Profile</h2>
+        <img id="profile_avatar" src="../../static/network/img/avatars/{{ profile.avatar }}" alt=""> <br>
+        <a href="/profile/{{ profile.id }}"> {{ profile.username }} </a> <br>
+        <p class="email">{{ profile.email }}</p> <br>
+        <p class="count">Followers : {{ profile.followers.count }} | Following : {{ profile.following.count }} | Likes : {{ profile.like_count }}</p><br>
     </div>
     <div class="posts">
         {% for post in page_obj %}
@@ -16,7 +15,9 @@
                 {% for profile in users %}
                     {% if post.username_id == profile.id  %}
                         <br>
-                        <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                        <a href="/profile/{{ profile.id }}">
+                            <img width="50px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                        </a>
                     {% endif %}
                 {% endfor %}
                 <a class="profile_link" href="/profile/{{ post.username_id }}"> {{ post.username }} </a>
@@ -38,7 +39,9 @@
                     {% for liked in post.liked_user_count.all %}
                     {% for profile in users %}
                     {% if liked.id == profile.id  %}
+                    <a href="/profile/{{ profile.id }}">
                         <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                    </a>
                     {% endif %}
                     {% endfor %}
                     {% endfor %}
@@ -62,30 +65,38 @@
             </div>
         {% endfor %}
         <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
+            <ul class="paginator">
                 {% if page_obj.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link " href="?page={{ page_obj.previous_page_number }}" tabindex="-1" aria-disabled="true">Previous</a>
+                </li>
                 {% else %}
                 <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
                 </li>
                 {% endif %}
                 {% for page in page_obj.paginator.page_range %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">&laquo; Next</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}" tabindex="-1" aria-disabled="true">Next</a>
+                </li>
                 {% else %}
                 <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">&laquo; Next</a>
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
                 </li>
                 {% endif %}
             </ul>
         </nav>
+    </div>
+    <div class="profile-card leader">
+
+        <h2>THE MOST LIKES 🏆</h2>
+        <img id="profile_avatar" src="../../static/network/img/avatars/{{ topuser.avatar }}" alt=""> <br>
+        <a href="/profile/{{ topuser.id }}"> {{ topuser.username }} </a> <br>
+        <p class="email">{{ topuser.email }}</p> <br>
+        <p class="count">Followers : {{ topuser.followers.count }} | Following : {{ topuser.following.count }} | Likes : {{ topuser.like_count }}</p><br>
     </div>
 </section>
 {% endblock %}
