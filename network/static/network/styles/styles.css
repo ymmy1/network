@@ -86,6 +86,119 @@ body #index .leader h2, body #profile .leader h2, body #following .leader h2 {
   background: #c4aa5b !important;
 }
 
+body #index .posts, body #profile .posts, body #following .posts {
+  margin: 0 !important;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding-bottom: 20px;
+  width: 36%;
+}
+
+body #index .posts form, body #profile .posts form, body #following .posts form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+body #index .posts form textarea, body #profile .posts form textarea, body #following .posts form textarea {
+  color: #fff;
+  width: 90%;
+  background: rgba(39, 68, 102, 0.3);
+  border: 4px solid #274466;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  border-right: none;
+  padding: 10px 0 0 10px;
+}
+
+body #index .posts form textarea::-webkit-input-placeholder, body #profile .posts form textarea::-webkit-input-placeholder, body #following .posts form textarea::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body #index .posts form textarea:-ms-input-placeholder, body #profile .posts form textarea:-ms-input-placeholder, body #following .posts form textarea:-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body #index .posts form textarea::-ms-input-placeholder, body #profile .posts form textarea::-ms-input-placeholder, body #following .posts form textarea::-ms-input-placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body #index .posts form textarea::placeholder, body #profile .posts form textarea::placeholder, body #following .posts form textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+body #index .posts form textarea:focus, body #profile .posts form textarea:focus, body #following .posts form textarea:focus {
+  outline: none;
+}
+
+body #index .posts form button, body #profile .posts form button, body #following .posts form button {
+  color: #fff;
+  font-weight: bold;
+  background: rgba(39, 68, 102, 0.7);
+  border: 4px solid #274466;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: none;
+}
+
+body #index .posts form button:hover, body #profile .posts form button:hover, body #following .posts form button:hover {
+  background: #274466;
+}
+
+body #index .posts .post, body #profile .posts .post, body #following .posts .post {
+  border: 5px solid #274466;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 90%;
+  margin: 20px auto;
+}
+
+body #index .posts .post .top-info, body #profile .posts .post .top-info, body #following .posts .post .top-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+body #index .posts .post .top-info .poster-info a, body #profile .posts .post .top-info .poster-info a, body #following .posts .post .top-info .poster-info a {
+  margin-right: 5px;
+}
+
+body #index .posts .post .top-info .poster-info a img, body #profile .posts .post .top-info .poster-info a img, body #following .posts .post .top-info .poster-info a img {
+  width: 50px;
+}
+
+body #index .posts .post .top-info .poster-timestamp, body #profile .posts .post .top-info .poster-timestamp, body #following .posts .post .top-info .poster-timestamp {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+body #index .posts .post .middle-info .post_body, body #profile .posts .post .middle-info .post_body, body #following .posts .post .middle-info .post_body {
+  text-align: left;
+  margin-left: 60px;
+}
+
+body #index .posts .post .bottom-info, body #profile .posts .post .bottom-info, body #following .posts .post .bottom-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
 body #index .profile-card, body #index #login, body #profile .profile-card, body #profile #login, body #following .profile-card, body #following #login {
   margin: 0 !important;
   height: -webkit-fit-content;
@@ -114,7 +227,7 @@ body #index .profile-card .newuser li, body #index #login .newuser li, body #pro
   margin-top: 20px;
 }
 
-body #register, body #login, body #index .profile-card, body #profile .profile-card, body #following .profile-card, body #index #login {
+body #register, body #login, body #index .profile-card, body #profile .profile-card, body #following .profile-card, body #index #login, body .posts {
   -webkit-box-shadow: 0px 10px 52px 5px rgba(0, 0, 0, 0.75);
   box-shadow: 0px 10px 52px 5px rgba(0, 0, 0, 0.75);
   border-radius: 5px;
@@ -125,7 +238,7 @@ body #register, body #login, body #index .profile-card, body #profile .profile-c
   border-radius: 30px;
 }
 
-body #register h2, body #login h2, body #index .profile-card h2, body #profile .profile-card h2, body #following .profile-card h2, body #index #login h2 {
+body #register h2, body #login h2, body #index .profile-card h2, body #profile .profile-card h2, body #following .profile-card h2, body #index #login h2, body .posts h2 {
   background: #274466;
   padding: 10px 0;
   margin: 0;
@@ -133,38 +246,38 @@ body #register h2, body #login h2, body #index .profile-card h2, body #profile .
   border-top-right-radius: 30px;
 }
 
-body #register form, body #login form, body #index .profile-card form, body #profile .profile-card form, body #following .profile-card form, body #index #login form {
+body #register form, body #login form, body #index .profile-card form, body #profile .profile-card form, body #following .profile-card form, body #index #login form, body .posts form {
   padding: 10px 10px 0;
 }
 
-body #register form input, body #login form input, body #index .profile-card form input, body #profile .profile-card form input, body #following .profile-card form input, body #index #login form input {
+body #register form input, body #login form input, body #index .profile-card form input, body #profile .profile-card form input, body #following .profile-card form input, body #index #login form input, body .posts form input {
   background: rgba(255, 255, 255, 0.8);
 }
 
-body #register form input:focus, body #login form input:focus, body #index .profile-card form input:focus, body #profile .profile-card form input:focus, body #following .profile-card form input:focus, body #index #login form input:focus {
+body #register form input:focus, body #login form input:focus, body #index .profile-card form input:focus, body #profile .profile-card form input:focus, body #following .profile-card form input:focus, body #index #login form input:focus, body .posts form input:focus {
   background: rgba(255, 255, 255, 0.95);
 }
 
-body #register form input[type=submit], body #login form input[type=submit], body #index .profile-card form input[type=submit], body #profile .profile-card form input[type=submit], body #following .profile-card form input[type=submit], body #index #login form input[type=submit] {
+body #register form input[type=submit], body #login form input[type=submit], body #index .profile-card form input[type=submit], body #profile .profile-card form input[type=submit], body #following .profile-card form input[type=submit], body #index #login form input[type=submit], body .posts form input[type=submit] {
   color: black;
   font-weight: bold;
 }
 
-body #register form .avatar-list input[type=radio], body #login form .avatar-list input[type=radio], body #index .profile-card form .avatar-list input[type=radio], body #profile .profile-card form .avatar-list input[type=radio], body #following .profile-card form .avatar-list input[type=radio], body #index #login form .avatar-list input[type=radio] {
+body #register form .avatar-list input[type=radio], body #login form .avatar-list input[type=radio], body #index .profile-card form .avatar-list input[type=radio], body #profile .profile-card form .avatar-list input[type=radio], body #following .profile-card form .avatar-list input[type=radio], body #index #login form .avatar-list input[type=radio], body .posts form .avatar-list input[type=radio] {
   display: none;
 }
 
-body #register form .avatar-list label, body #login form .avatar-list label, body #index .profile-card form .avatar-list label, body #profile .profile-card form .avatar-list label, body #following .profile-card form .avatar-list label, body #index #login form .avatar-list label {
+body #register form .avatar-list label, body #login form .avatar-list label, body #index .profile-card form .avatar-list label, body #profile .profile-card form .avatar-list label, body #following .profile-card form .avatar-list label, body #index #login form .avatar-list label, body .posts form .avatar-list label {
   border-radius: 50%;
   cursor: pointer;
 }
 
-body #register form .avatar-list label img, body #login form .avatar-list label img, body #index .profile-card form .avatar-list label img, body #profile .profile-card form .avatar-list label img, body #following .profile-card form .avatar-list label img, body #index #login form .avatar-list label img {
+body #register form .avatar-list label img, body #login form .avatar-list label img, body #index .profile-card form .avatar-list label img, body #profile .profile-card form .avatar-list label img, body #following .profile-card form .avatar-list label img, body #index #login form .avatar-list label img, body .posts form .avatar-list label img {
   border-radius: 50%;
   width: 100px;
 }
 
-body #register form .avatar-list .active, body #login form .avatar-list .active, body #index .profile-card form .avatar-list .active, body #profile .profile-card form .avatar-list .active, body #following .profile-card form .avatar-list .active, body #index #login form .avatar-list .active {
+body #register form .avatar-list .active, body #login form .avatar-list .active, body #index .profile-card form .avatar-list .active, body #profile .profile-card form .avatar-list .active, body #following .profile-card form .avatar-list .active, body #index #login form .avatar-list .active, body .posts form .avatar-list .active {
   border: 5px solid white;
   -webkit-transform: scale(2);
           transform: scale(2);

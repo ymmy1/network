@@ -85,6 +85,96 @@ body
                 background: #c4aa5b !important;
             }
         }
+        .posts
+        {
+            margin: 0 !important;
+            height: fit-content;
+            padding-bottom: 20px;
+            width: 36%;
+            form
+            {
+                display: flex;
+                justify-content: center;
+
+                textarea
+                {
+                    color: #fff;
+                    width: 90%;
+                    background: rgba($bg-darker, 0.3);
+                    border: 4px solid $bg-darker;
+                    border-top-left-radius: 10px;
+                    border-bottom-left-radius: 10px;
+                    border-right: none;
+                    padding: 10px 0 0 10px;
+                    &::placeholder 
+                    {
+                        color: rgba(#ffffff, 0.7);  
+                    }
+                    &:focus 
+                    {
+                        outline: none; 
+                    }
+                }
+                button
+                {
+                    color: #fff;
+                    font-weight: bold;
+                    background: rgba($bg-darker, 0.7);
+                    border: 4px solid $bg-darker;
+                    border-top-right-radius: 10px;
+                    border-bottom-right-radius: 10px;
+                    border-left: none;
+                    &:hover
+                    {
+                        background: rgba($bg-darker, 1);
+                    }
+                    
+                }
+            }
+            .post
+            {
+                border: 5px solid $bg-darker;
+                display: flex;
+                flex-direction: column;
+                width: 90%;
+                margin: 20px auto;
+                
+                .top-info
+                {
+                    display: flex;
+                    justify-content: space-between;
+                    .poster-info
+                    {
+                        a
+                        {
+                            margin-right: 5px;
+                            img
+                            {
+                                width: 50px;
+                            }
+                        }
+                    }
+                    .poster-timestamp
+                    {
+                        display: flex;
+                    }
+                }
+                .middle-info
+                {
+                    .post_body
+                    {
+                        text-align: left;
+                        margin-left: 60px;
+                    }
+                }
+                .bottom-info
+                {
+                    display: flex;
+                    justify-content: space-between;
+                }
+            }
+
+        }
         .profile-card, #login
         {
             margin: 0 !important;
@@ -112,7 +202,7 @@ body
             }
         }
     }
-    #register, #login, #index .profile-card, #profile .profile-card, #following .profile-card, #index #login
+    #register, #login, #index .profile-card, #profile .profile-card, #following .profile-card, #index #login, .posts
     {
         -webkit-box-shadow: 0px 10px 52px 5px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 10px 52px 5px rgba(0,0,0,0.75);

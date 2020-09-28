@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
 
+
     // Use buttons to toggle between views
     document.querySelectorAll('.like_button').forEach(link => {link.onclick = () => { like_post(link) }});
     document.querySelectorAll('.unlike_button').forEach(link => {link.onclick = () => { unlike_post(link) }});
@@ -54,7 +55,7 @@ function like_post(link)
   current_likes = current_likes + 1;
   document.getElementById(`like_for_${link.dataset.page}`).innerHTML = current_likes
   link.setAttribute("class", "unlike_button")
-  link.innerHTML = "UnLike"
+  link.innerHTML = `<i class="fas fa-heart"></i>`
   document.querySelectorAll('.unlike_button').forEach(link => {link.onclick = () => { unlike_post(link) }});
 }
 
@@ -79,7 +80,7 @@ function unlike_post(link)
   current_likes = current_likes - 1;
   document.getElementById(`like_for_${link.dataset.page}`).innerHTML = current_likes
   link.setAttribute("class", "like_button")
-  link.innerHTML = "Like"
+  link.innerHTML = `<i class="far fa-heart"></i>`
   document.querySelectorAll('.like_button').forEach(link => {link.onclick = () => { like_post(link) }});
 }
 
@@ -102,7 +103,7 @@ function follow_user(link)
     if(links[i].innerHTML == nickname.innerHTML)
     {
       button = links[i].parentElement.querySelector('.follow_button');
-      button.innerHTML = "UnFollow";
+      button.innerHTML = `<i class="fas fa-user-check"></i>`;
       button.setAttribute("class", "unfollow_button")
     }
   }
@@ -130,7 +131,7 @@ function unfollow_user(link)
     if(links[i].innerHTML == nickname.innerHTML)
     {
       button = links[i].parentElement.querySelector('.unfollow_button');
-      button.innerHTML = "Follow";
+      button.innerHTML = `<i class="fas fa-user-plus"></i>`;
       button.setAttribute("class", "follow_button")
     }
   }
