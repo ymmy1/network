@@ -142,11 +142,12 @@ function unfollow_user(link)
 
 function edit_post(link)
 {
-  var textarea = link.parentElement.querySelector('textarea');
-  var form = link.parentElement.querySelector('form');
-  link.parentElement.querySelector('.post_body').style.display = "none";
-  textarea.value = link.parentElement.querySelector('.post_body').innerHTML;
-  link.parentElement.querySelector('form').style.display = "block";
+  parent = link.parentElement.parentElement.parentElement;
+  var textarea = parent.querySelector('textarea');
+  var form = parent.querySelector('form');
+  parent.querySelector('.post_body').style.display = "none";
+  textarea.value = parent.querySelector('.post_body').innerHTML;
+  parent.querySelector('form').style.display = "block";
   
   $(document).mouseup(function(e) 
   {
@@ -155,8 +156,8 @@ function edit_post(link)
     // if the target of the click isn't the container nor a descendant of the container
     if (!container.is(e.target) && container.has(e.target).length === 0) 
     {
-      link.parentElement.querySelector('.post_body').style.display = "block";
-      link.parentElement.querySelector('form').style.display = "none";
+      parent.querySelector('.post_body').style.display = "block";
+      parent.querySelector('form').style.display = "none";
       
     }
   });
@@ -170,9 +171,9 @@ function edit_post(link)
           post_id : link.dataset.page
       })
     })
-    link.parentElement.querySelector('.post_body').style.display = "block";
-    link.parentElement.querySelector('.post_body').innerHTML = textarea.value;
-    link.parentElement.querySelector('form').style.display = "none";
+    parent.querySelector('.post_body').style.display = "block";
+    parent.querySelector('.post_body').innerHTML = textarea.value;
+    parent.querySelector('form').style.display = "none";
   
   }
 }
@@ -180,8 +181,9 @@ function edit_post(link)
 function delete_post(link)
 {
   // Front End
-  link.parentElement.style.opacity = "0";
-  link.parentElement.style.display = "none";  
+  parent = link.parentElement.parentElement.parentElement;
+  parent.style.opacity = "0";
+  parent.style.display = "none";
   // Back End
   fetch('/delete_post', {
     method: 'POST',

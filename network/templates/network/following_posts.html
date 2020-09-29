@@ -28,9 +28,9 @@
                             {% if post.username_id == user.id %}
                             {% else %}
                                 {% if post.username_id in following_users %}
-                                    <button class="unfollow_button" data-page = "{{ post.username_id }}">UnFollow</button>
+                                    <button class="unfollow_button" data-page = "{{ post.username_id }}"><i class="fas fa-user-check"></i></button>
                                 {% else %}
-                                    <button class="follow_button" data-page = "{{ post.username_id }}">Follow</button>
+                                    <button class="follow_button" data-page = "{{ post.username_id }}"><i class="fas fa-user-plus"></i></button>
                                 {% endif %}
                             {% endif %}
                         {% endif %}
@@ -38,8 +38,8 @@
                     <div class="poster-timestamp">
                         <p>{{ post.timestamp }}</p>
                         {% if post.username_id == user.id %}
-                        <button class="edit_post_button" data-page = "{{ post.id }}">Edit</button>
-                        <button class="delete_post_button" data-page = "{{ post.id }}">Delete</button>
+                        <button class="edit_post_button" data-page = "{{ post.id }}"><i class="fas fa-pen"></i></button>
+                        <button class="delete_post_button" data-page = "{{ post.id }}"><i class="fas fa-trash"></i></button>
                         {% endif %}
                     </div>
                 </div>
@@ -56,10 +56,12 @@
                         <span id="like_for_{{ post.id }}">{{ post.liked_user_count.all.count }}</span>
                         {% if user.is_authenticated %}
                             {% if post.id in liked_posts %}
-                                <button class="unlike_button" data-page = "{{ post.id }}">UnLike</button>
+                                <button class="unlike_button" data-page = "{{ post.id }}"><i class="fas fa-heart"></i></button>
                             {% else %}
-                                <button class="like_button" data-page = "{{ post.id }}">Like</button>
+                                <button class="like_button" data-page = "{{ post.id }}"><i class="far fa-heart"></i></button>
                             {% endif %}
+                        {% else %}
+                        <span>Likes</span>
                         {% endif %}
                     </div>
                     <div id="like_avatars_{{ post.id }}">
@@ -91,7 +93,11 @@
                     </li>
                     {% endif %}
                     {% for page in page_obj.paginator.page_range %}
-                    <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% if page == page_obj.number %}
+                        <li class="page-item"><a class="page-link active-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                    {% endif %}
                     {% endfor %}
                     {% if page_obj.has_next %}
                     <li class="page-item">

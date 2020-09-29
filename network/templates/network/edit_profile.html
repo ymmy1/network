@@ -1,13 +1,13 @@
 {% extends "network/layout.html" %}
 
 {% block body %}
-<section>
+<section id="edit_profile">
     <h2>Edit Profile</h2>
-    <img id="profile_avatar" width="50px" src="../../static/network/img/avatars/{{ user.avatar }}" alt=""> <br>
+    <img id="profile_avatar" src="../../static/network/img/avatars/{{ user.avatar }}" alt=""> <br>
     <a href="/profile/{{ user.id }}"> {{ user.username }} </a> <br>
-    <div class="avatar-list">
+    <div class="">
         <form action="{% url 'edit_profile' %}" method="post">
-            <div class="form-group">
+            <div class="form-group avatar-list">
                 <h4>Change Avatar</h4>
 
                 <input type="radio" id="avatar_tbs_fs_gary_helmet.png" name="avatar" value="avatar_tbs_fs_gary_helmet.png">

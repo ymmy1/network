@@ -29,8 +29,8 @@ def index(request):
     following_users = []
     for i in range(len(following)):
         following_users.append(following[i]["id"])
-    # Show 5 posts per page.
-    paginator = Paginator(posts, 5) 
+    # Show 10 posts per page.
+    paginator = Paginator(posts, 10) 
 
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -305,11 +305,20 @@ def delete_post(request):
     # Query for requested email
     try:
         post = Post.objects.get(id=data["post_id"])
+        profile = User.objects.get(id=post.username_id)
     except Post.DoesNotExist:
         return JsonResponse({"error": "Post not found."}, status=404)
 
     if post.username_id == request.user.id:
+        likes = post.liked_user_count.filter(
+            liked_id=data["post_id"]
+        ).all()
+        print()
+        for like in likes:
+            post.liked_user_count.remove(like)
+            profile.like_count = profile.like_count - 1
         post.delete()
+        profile.save()
         return HttpResponse(status=204)
     else:
         return JsonResponse({"error": "ID's not matching"}, status=400)

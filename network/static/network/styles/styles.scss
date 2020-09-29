@@ -38,6 +38,7 @@ body
             justify-content: center;
             li
             {
+                background: $bg-darker;
                 a
                 {
                     background: $bg-dark;
@@ -48,8 +49,14 @@ body
                     &:hover
                     {
                         background: rgba($bg-dark, 0.1);
-
+                        
                     }
+                    
+                }
+                .active-link
+                {
+                    background: $bg-darker;
+
                 }
             }
             .disabled
@@ -133,16 +140,31 @@ body
             }
             .post
             {
-                border: 5px solid $bg-darker;
                 display: flex;
                 flex-direction: column;
                 width: 90%;
+                padding: 15px;
                 margin: 20px auto;
-                
+                border: 1px solid rgba(#ffffff, 0.5);
+                border-radius: 10px;
+                button
+                {
+                    background: none;
+                    border: none;
+                    -webkit-text-stroke-width: 1px;
+                    -webkit-text-stroke-color: black;
+                    &:focus
+                    {
+                        border: none;
+                        outline: none;
+                    }
+                }
                 .top-info
                 {
                     display: flex;
                     justify-content: space-between;
+                    outline: none;
+                    padding: 5px 0;
                     .poster-info
                     {
                         a
@@ -153,10 +175,27 @@ body
                                 width: 50px;
                             }
                         }
+                        .unfollow_button
+                        {
+                            color: #4eff4e;
+                        }
+                        .follow_button
+                        {
+                            color: #ffffff;
+                        }
                     }
                     .poster-timestamp
                     {
                         display: flex;
+                        height: 1em;
+                        .edit_post_button
+                        {
+                            color: grey;
+                        }
+                        .delete_post_button
+                        {
+                            color: red;
+                        }
                     }
                 }
                 .middle-info
@@ -165,12 +204,41 @@ body
                     {
                         text-align: left;
                         margin-left: 60px;
+                        margin-bottom: 0px;
+                        padding: 10px 0;
+                        word-break: break-all;
+                    }
+                    form
+                    {
+                        textarea
+                        {
+                            background: rgba($bg-darker, 0.1);
+                            border: 4px solid $bg-darker;
+                        }
+                        button
+                        {
+                            color: #fff;
+                            font-weight: bold;
+                            background: rgba($bg-darker, 0.7);
+                            border: 4px solid $bg-darker;
+                            border-radius: 5px;
+                            margin-bottom: 10px;
+                            
+                            -webkit-text-stroke-width: 0px;
+                            -webkit-text-stroke-color: black;
+                        }
+
                     }
                 }
                 .bottom-info
                 {
+                    border-top: 1px solid white;
                     display: flex;
                     justify-content: space-between;
+                    .like_button, .unlike_button
+                    {
+                        color: red;
+                    }
                 }
             }
 
@@ -202,7 +270,7 @@ body
             }
         }
     }
-    #register, #login, #index .profile-card, #profile .profile-card, #following .profile-card, #index #login, .posts
+    #register, #login, #index .profile-card, #profile .profile-card, #following .profile-card, #index #login, .posts, #edit_profile
     {
         -webkit-box-shadow: 0px 10px 52px 5px rgba(0,0,0,0.75);
         -moz-box-shadow: 0px 10px 52px 5px rgba(0,0,0,0.75);
