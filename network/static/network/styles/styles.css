@@ -113,7 +113,6 @@ body #index .posts_container, body #profile .posts_container, body #following .p
   margin: 0 auto;
   max-width: 700px;
   width: 100%;
-  min-width: 430px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -129,6 +128,7 @@ body #index .posts_container .posts, body #profile .posts_container .posts, body
   height: -moz-fit-content;
   height: fit-content;
   padding-bottom: 20px;
+  max-width: 600px;
 }
 
 body #index .posts_container .posts form, body #profile .posts_container .posts form, body #following .posts_container .posts form {
@@ -389,34 +389,24 @@ body #register form .avatar-list .active, body #login form .avatar-list .active,
   }
 }
 
-@media screen and (max-width: 1100px) {
-  body #index .profile-card h2, body #profile .profile-card h2, body #following .profile-card h2 {
-    font-size: 1.5em;
-  }
-  body #index .profile-card img, body #profile .profile-card img, body #following .profile-card img {
-    width: 175px;
-  }
-  body #index .profile-card a, body #index .profile-card p, body #profile .profile-card a, body #profile .profile-card p, body #following .profile-card a, body #following .profile-card p {
-    padding: 0 5px;
-  }
-}
-
-@media screen and (max-width: 920px) {
+@media screen and (max-width: 1400px) {
   body #index .leader, body #index .profile, body #index .login, body #profile .leader, body #profile .profile, body #profile .login, body #following .leader, body #following .profile, body #following .login {
     display: none;
   }
   body #index .card-container, body #profile .card-container, body #following .card-container {
+    width: -webkit-fill-available;
     display: block;
   }
   body #index .card-container #login h2, body #profile .card-container #login h2, body #following .card-container #login h2 {
     font-size: 1.5em;
   }
-  body #index .card-container .leader2, body #profile .card-container .leader2, body #following .card-container .leader2 {
-    margin-top: 50px !important;
+  body #index .card-container .profile-card, body #profile .card-container .profile-card, body #following .card-container .profile-card {
+    margin: 0 auto 50px !important;
+    width: fi;
   }
 }
 
-@media screen and (max-width: 670px) {
+@media screen and (max-width: 970px) {
   body #index, body #profile, body #following {
     display: -webkit-box;
     display: -ms-flexbox;
@@ -432,9 +422,6 @@ body #register form .avatar-list .active, body #login form .avatar-list .active,
   body #index .leader, body #index .profile, body #index .login, body #profile .leader, body #profile .profile, body #profile .login, body #following .leader, body #following .profile, body #following .login {
     display: none;
   }
-  body #index .profile-card, body #profile .profile-card, body #following .profile-card {
-    margin: auto !important;
-  }
   body #index .leader2, body #profile .leader2, body #following .leader2 {
     margin-bottom: 50px !important;
   }
@@ -443,6 +430,9 @@ body #register form .avatar-list .active, body #login form .avatar-list .active,
 @media screen and (max-width: 470px) {
   body #index, body #profile, body #following {
     padding: 70px 0px;
+  }
+  body #index .profile-card img, body #profile .profile-card img, body #following .profile-card img {
+    width: 190px;
   }
   body #index .posts_container, body #profile .posts_container, body #following .posts_container {
     max-width: 100%;
