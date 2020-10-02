@@ -60,7 +60,7 @@
         <div class="profile-card leader2">
             
             <h2>THE MOST LIKES 🏆</h2>
-            <img id="profile_avatar" src="../../static/network/img/avatars/{{ topuser.avatar }}" alt=""> <br>
+            <img id="profile_avatar" src="/../../static/network/img/avatars/{{ topuser.avatar }}" alt=""> <br>
             <a href="/profile/{{ topuser.id }}"> {{ topuser.username }} </a> <br>
             <p class="email">{{ topuser.email }}</p> <br>
             <p class="count">Followers&nbsp;:&nbsp;{{ topuser.followers.count }} | Following&nbsp;:&nbsp;{{ topuser.following.count }} | Likes&nbsp;:&nbsp;{{ topuser.like_count }}</p><br>
@@ -83,7 +83,7 @@
                         {% for profile in users %}
                             {% if post.username_id == profile.id  %}
                                 <a href="/profile/{{ profile.id }}">
-                                    <img src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                                    <img src="/../../static/network/img/avatars/{{ profile.avatar }}" alt="">
                                 </a>
                             {% endif %}
                         {% endfor %}
@@ -133,7 +133,7 @@
                             {% for profile in users %}
                                 {% if liked.id == profile.id  %}
                                     <a href="/profile/{{ profile.id }}">
-                                        <img width="20px" src="../../static/network/img/avatars/{{ profile.avatar }}" alt="">
+                                        <img width="20px" src="/../../static/network/img/avatars/{{ profile.avatar }}" alt="">
                                     </a>
                                 {% endif %}
                             {% endfor %}
